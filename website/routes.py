@@ -1,4 +1,4 @@
-from flask import render_template, url_for
+from flask import render_template, url_for, redirect, request
 from website import app, db, login_manager
 from website.forms import Add, Login
 from website.models import User, Posts
@@ -8,13 +8,22 @@ import sqlite3
 
 @app.route('/')
 def home():
-    return "Hello!"
+    conn = sqlite3.connect('website/site.db')
+    c = conn.cursor()
+    c.execute('SELECT * FROM posts')
+    all_rows = c.fetchall()
+    return render_template('home.html', all_rows=all_rows)
 
 
 @app.route('/post/<int:post_id>')
 def post(post_id):
-    return str(post_id)
-
+    if str(post_id).isdigit():
+        conn = sqlite3.connect('website/site.db')
+        c = conn.cursor()
+        all_rows = c.execute('SELECT * FROM posts WHERE id = ?', str(post_id))
+        return render_template('post_id.html', all_rows = all_rows)
+    else:
+        return 'Пожалуйста, вводите целые числа'
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -26,12 +35,27 @@ def login():
     return render_template('login.html', form=form)
 
 
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
+
+
 @app.route('/test')
 def test():
     return str(current_user.username)
 
-"""
-@app.route('/post/add')
+
+@app.route('/post/add', methods=['GET', 'POST'])
+@login_required
 def add():
-    form = Add
-"""
+    form = Add()
+    if form.validate_on_submit():
+        print(form.title.data)
+        print(form.text.data)
+        title = form.title.data
+        text = form.title.data
+        new_post = Posts(title=title, author_name=current_user.username, text=text, author_id=current_user.id)
+        db.session.add(new_post)
+        db.session.commit()
+    return render_template('add.html', form=form)

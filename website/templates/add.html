@@ -1,14 +1,10 @@
 <form method="POST">
     {{ form.hidden_tag() }}
         <div class="form-row">
-            {{ form.username.label }}
-            {{ form.username(class="form-control") }}
-            {{ form.password.label }}
-            {{ form.password(class="form-control") }}
-            {{ form.confirm_password.label }}
-            {{ form.confirm_password(class="form-control") }}
-            {{ form.email.label }}
-            {{ form.email(class="form-control") }}
+            {{ form.title.label }}
+            {{ form.title }}
+            {{ form.text.label }}
+            {{ form.text }}
         </div>
-        {{ form.submit(class="btn btn-primary", style="margin-left: -5px; margin-top: 10px; width: 310px") }}
+        {{ form.submit }}
 </form>
