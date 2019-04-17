@@ -4,7 +4,6 @@ from wtforms.validators import DataRequired, Length
 
 
 class Add(FlaskForm):
-    author = StringField('Автор', validators=[DataRequired(), Length(min=4, max=20)])
     title = StringField('Заголовок', validators=[DataRequired(), Length(min=10, max=35)])
     text = StringField('Напишите что-нибудь...', validators=[DataRequired(), Length(min=60, max=255)])
     submit = SubmitField('Создать')
@@ -14,3 +13,10 @@ class Login(FlaskForm):
     username = StringField('Логин', validators=[DataRequired()])
     password = PasswordField('Пароль', validators=[DataRequired()])
     submit = SubmitField('Войти')
+
+
+class Registration(FlaskForm):
+    username = StringField('Введите имя аккаунта', validators=[DataRequired()])
+    password = PasswordField('Введите пароль', validators=[DataRequired()])
+    confirm_password = PasswordField('Повторите пароль', validators=[DataRequired()])
+    submit = SubmitField('Зарегистрироваться')
