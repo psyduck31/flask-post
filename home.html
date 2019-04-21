@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+{% for data in all_rows %}
+<div class="card-deck d-inline-block", style="margin-top: 1rem; margin-left: 1.45rem">
+	<div class="card" style="width: 14rem;">
+	  <div class="card-body">
+	    <h5 class="card-title">{{ data[1] }}</h5>
+	    <h6 class="card-subtitle mb-2 text-muted">Автор: {{ data[3] }}</h6>
+	    {% if data[2]|length > 100 %}
+	    	<p class="card-text"> {{ data[2][0:100:1] }}...</p>
+	    {% else %}	
+	    	<p class="card-text"> {{ data[2] }}</p>
+	    {% endif %}
+	    <a href="/post/{{ data[0] }}" class="card-link">Прочитать полностью</a>
+	  </div>
+	</div>
+</div>
+{% endfor %}
+{% endblock %}
