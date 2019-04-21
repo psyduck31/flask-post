@@ -1,0 +1,17 @@
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-dark ml-auto">
+		<a class="navbar-brand" style="color: white" href="{{ url_for('home')}}">Записи</a>
+		<ul class="navbar-nav ml-auto">
+			{% if current_user.is_authenticated %}
+				<a class="nav-link" href="{{ url_for('add') }}" style="color: white">Добавить</a>
+				<a class="nav-link" href="{{ url_for('logout') }}" style="color: white">Выйти</a>
+			{% else %}
+				<a class="nav-link" href="{{ url_for('login') }}" style="color: white" >Войти</a>
+				<a class="nav-link" href="{{ url_for('registration') }}" style="color: white">Зарегистрироваться</a>
+			{% endif %}
+		</ul>
+	</nav>
+</body>
+{% block content %} {% endblock %}

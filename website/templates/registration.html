@@ -1,13 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+<div align="center">
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-danger col-sm-2" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+</div>
+<div align="center" style="margin-top: 12%">
+<div class="card w-25">
 <form method="POST">
     {{ form.hidden_tag() }}
-        <div class="form-row">
-            {{ form.username.label }}
-            {{ form.username }}
-            {{ form.password.label }}
-            {{ form.password }}
-            {{ form.confirm_password.label }}
-            {{ form.confirm_password }}
-            {{ form.submit.label }}
-            {{ form.submit }}
-        </div>
+    <div class="form-group">
+        {{ form.username.label }}
+        {{ form.username(class="form-control col-sm-10") }}
+        {{ form.password.label }}
+        {{ form.password(class="form-control col-sm-10") }}
+        {{ form.confirm_password.label }}
+        {{ form.confirm_password(class="form-control col-sm-10") }}
+        {{ form.submit(class="btn btn-primary col-sm-10", style="margin-top: 4%")}}
+    </div>
 </form>
+</div>
+</div>
+{% endblock %}

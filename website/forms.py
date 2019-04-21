@@ -4,8 +4,8 @@ from wtforms.validators import DataRequired, Length
 
 
 class Add(FlaskForm):
-    title = StringField('Заголовок', validators=[DataRequired(), Length(min=10, max=35)])
-    text = StringField('Напишите что-нибудь...', validators=[DataRequired(), Length(min=60, max=255)])
+    title = StringField('Заголовок', validators=[DataRequired()])
+    text = StringField('Напишите что-нибудь...', validators=[DataRequired()])
     submit = SubmitField('Создать')
 
 
