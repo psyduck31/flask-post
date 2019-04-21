@@ -4,11 +4,11 @@
 		<a class="navbar-brand" style="color: white" href="{{ url_for('home')}}">Записи</a>
 		<ul class="navbar-nav ml-auto">
 			{% if current_user.is_authenticated %}
-				<a class="nav-link" href="{{ url_for('add') }}" style="color: white">Добавить</a>
-				<a class="nav-link" href="{{ url_for('logout') }}" style="color: white">Выйти</a>
+				<a class="btn btn-primary" href="{{ url_for('add') }}" style="color: white; margin-right: 2%">Добавить</a>
+				<a class="btn btn-danger" href="{{ url_for('logout') }}" style="color: white">Выйти</a>
 			{% else %}
-				<a class="nav-link" href="{{ url_for('login') }}" style="color: white" >Войти</a>
-				<a class="nav-link" href="{{ url_for('registration') }}" style="color: white">Зарегистрироваться</a>
+				<a class="btn btn-primary" href="{{ url_for('login') }}" style="color: white; margin-right: 2%" >Войти</a>
+				<a class="btn btn-success" href="{{ url_for('registration') }}" style="color: white">Зарегистрироваться</a>
 			{% endif %}
 		</ul>
 	</nav>

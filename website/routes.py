@@ -1,6 +1,6 @@
-from flask import render_template, url_for, redirect, flash
+from flask import render_template, url_for, redirect, flash, request
 from website import app, db, login_manager
-from website.forms import Add, Login, Registration
+from website.forms import Add, Login, Registration, Edit
 from website.models import User, Posts
 from flask_login import login_user, current_user, logout_user, login_required
 import sqlite3, time
@@ -76,3 +76,24 @@ def registration():
                 else:
                     flash('Введенные пароли не совпадают', 'error')
     return render_template('registration.html', form=form)
+
+
+@app.route('/post/delete/<int:post_id>')
+def delete(post_id):
+    if current_user.username == Posts.query.filter_by(id=post_id).first().author_name:
+        post = Posts.query.filter_by(id=post_id).first()
+        db.session.delete(post)
+        db.session.commit()
+
+
+@app.route('/post/edit/<int:post_id>', methods=["GET", "POST"])
+def edit(post_id):
+    form = Edit()
+    if current_user.username == Posts.query.filter_by(id=post_id).first().author_name:
+        conn = sqlite3.connect('website/site.db')
+        c = conn.cursor()
+        all_rows = c.execute('SELECT * FROM posts WHERE id = ?', str(post_id)).fetchall()
+        if form.validate_on_submit():
+            c.execute("""UPDATE posts SET title = ?, text = ?""",(form.title.data, form.text.data))
+            conn.commit()
+        return render_template('edit.html', form=form, all_rows=all_rows)

@@ -4,6 +4,12 @@
 <div class="card", style='margin: 1%'>
   <div class="card-header">
     <b> {{ data[1] }} </b>
+    {% if current_user.username == data[3] %}
+    <div class="float-right">
+    	<a class="btn btn-danger" href="delete/{{data[0]}}">Удалить</a>
+    	<a class="btn btn-warning" href="edit/{{data[0]}}">Изменить</a>
+    </div>
+    {% endif %}
   </div>
   <div class="card-body">
     <blockquote class="blockquote mb-0">

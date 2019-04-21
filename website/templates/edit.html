@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+{% for data in all_rows %}
+<div align="center" style="margin-top: 12%">
+<div class="card w-50">
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+        {{ form.title(class="form-control col-sm-10", value=data[1], style="margin-top: 4%") }}
+        {{ form.text(class="form-control col-sm-10", placeholder=data[2], style="margin-top: 4%") }}
+        {{ form.submit(class="btn btn-primary col-sm-10", style="margin-top: 4%")}}
+    </div>
+</form>
+</div>
+</div>
+{% endfor %}
+{% endblock %}

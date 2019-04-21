@@ -20,3 +20,9 @@ class Registration(FlaskForm):
     password = PasswordField('Введите пароль', validators=[DataRequired()])
     confirm_password = PasswordField('Повторите пароль', validators=[DataRequired()])
     submit = SubmitField('Зарегистрироваться')
+
+
+class Edit(FlaskForm):
+    title = StringField()
+    text = TextAreaField()
+    submit = SubmitField('Изменить')
