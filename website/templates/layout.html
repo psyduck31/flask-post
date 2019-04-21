@@ -1,6 +1,5 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-<body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-dark ml-auto">
 		<a class="navbar-brand" style="color: white" href="{{ url_for('home')}}">Записи</a>
 		<ul class="navbar-nav ml-auto">
@@ -13,5 +12,4 @@
 			{% endif %}
 		</ul>
 	</nav>
-</body>
 {% block content %} {% endblock %}

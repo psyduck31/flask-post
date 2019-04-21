@@ -1,11 +1,11 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField
+from wtforms import StringField, SubmitField, PasswordField, TextAreaField
 from wtforms.validators import DataRequired, Length
 
 
 class Add(FlaskForm):
     title = StringField('Заголовок', validators=[DataRequired()])
-    text = StringField('Напишите что-нибудь...', validators=[DataRequired()])
+    text = TextAreaField('Напишите что-нибудь...', validators=[DataRequired()])
     submit = SubmitField('Создать')
 
 
