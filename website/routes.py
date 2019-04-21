@@ -32,11 +32,16 @@ def post(post_id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = Login()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user and user.password == form.password.data:
             login_user(user, remember=True)
+            return redirect(url_for('home'))
+        else:
+            flash('Неправильно пароль, либо пользователь не существует', 'danger')
     return render_template('login.html', form=form)
 
 
@@ -56,6 +61,7 @@ def add():
         new_post = Posts(title=title, author_name=current_user.username, text=text, author_id=current_user.id)
         db.session.add(new_post)
         db.session.commit()
+        return redirect(url_for('post', post_id=new_post.id))
     return render_template('add.html', form=form)
 
 
@@ -64,17 +70,18 @@ def registration():
     form = Registration()
     if form.validate_on_submit():
         if not form.username.data.isalnum():
-            flash('В логине можно использовать только английские буквы и цифры', 'error')
+            flash('В логине можно использовать только английские буквы и цифры', 'danger')
         else:
             if User.query.filter_by(username=form.username.data).first():
-                flash('Пользователь с таким логином уже сущесвует', 'error')
+                flash('Пользователь с таким логином уже сущесвует', 'danger')
             else:
                 if form.password.data == form.confirm_password.data:
                     new_user = User(username=form.username.data, password=form.password.data)
                     db.session.add(new_user)
                     db.session.commit()
+                    return redirect(url_for('login'))
                 else:
-                    flash('Введенные пароли не совпадают', 'error')
+                    flash('Введенные пароли не совпадают', 'danger')
     return render_template('registration.html', form=form)
 
 
@@ -84,6 +91,10 @@ def delete(post_id):
         post = Posts.query.filter_by(id=post_id).first()
         db.session.delete(post)
         db.session.commit()
+        return redirect(url_for('home'))
+    else:
+        return render_template('404.html')
+
 
 
 @app.route('/post/edit/<int:post_id>', methods=["GET", "POST"])
@@ -96,4 +107,7 @@ def edit(post_id):
         if form.validate_on_submit():
             c.execute("""UPDATE posts SET title = ?, text = ?""",(form.title.data, form.text.data))
             conn.commit()
+            flask('Запись успешно изменена')
         return render_template('edit.html', form=form, all_rows=all_rows)
+    else:
+        return render_template('404.html')
